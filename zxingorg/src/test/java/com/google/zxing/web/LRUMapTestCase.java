@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 ZXing authors
+ * Copyright 2018 ZXing authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,19 +14,28 @@
  * limitations under the License.
  */
 
-package com.google.zxing.client.j2se;
+package com.google.zxing.web;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.nio.charset.StandardCharsets;
+import java.util.Map;
 
-public final class Base64DecoderTestCase extends Assert {
-  
+/**
+ * Tests {@link LRUMap}.
+ */
+public final class LRUMapTestCase extends Assert {
+
   @Test
-  public void testEncode() {
-    Base64Decoder decoder = Base64Decoder.getInstance();
-    assertArrayEquals("foo".getBytes(StandardCharsets.UTF_8), decoder.decode("Zm9v"));
+  public void testLRU() {
+    Map<String,String> map = new LRUMap<>(2);
+    map.put("foo", "bar");
+    map.put("bar", "baz");
+    assertEquals("bar", map.get("foo"));
+    assertEquals("baz", map.get("bar"));
+    map.put("baz", "bing");
+    assertEquals("bing", map.get("baz"));
+    assertNull(map.get("foo"));
   }
-  
+
 }

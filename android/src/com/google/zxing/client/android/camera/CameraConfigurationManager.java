@@ -161,7 +161,7 @@ final class CameraConfigurationManager {
     CameraConfigurationUtils.setFocus(
         parameters,
         prefs.getBoolean(PreferencesActivity.KEY_AUTO_FOCUS, true),
-        prefs.getBoolean(PreferencesActivity.KEY_DISABLE_CONTINUOUS_FOCUS, true),
+        prefs.getBoolean(PreferencesActivity.KEY_DISABLE_CONTINUOUS_FOCUS, false),
         safeMode);
 
     if (!safeMode) {
@@ -226,9 +226,9 @@ final class CameraConfigurationManager {
       Camera.Parameters parameters = camera.getParameters();
       if (parameters != null) {
         String flashMode = parameters.getFlashMode();
-        return flashMode != null &&
-            (Camera.Parameters.FLASH_MODE_ON.equals(flashMode) ||
-             Camera.Parameters.FLASH_MODE_TORCH.equals(flashMode));
+        return
+            Camera.Parameters.FLASH_MODE_ON.equals(flashMode) ||
+            Camera.Parameters.FLASH_MODE_TORCH.equals(flashMode);
       }
     }
     return false;
